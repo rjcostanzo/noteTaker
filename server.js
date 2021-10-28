@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = 8080;
+var port_number = process.env.PORT || 8080;
 const mainDir = path.join(__dirname, '/public');
 
 app.use(express.static('public'));
@@ -66,8 +66,8 @@ app.get('*', function(req, res)
     }
 );
 
-app.listen(port, function() 
+app.listen(port_number, function() 
     {
-        console.log(`Listening on port ${port}.`);
+        console.log(`Listening on port ${port_number}.`);
     }
 );
