@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = 5555;
+const port = 8080;
 const mainDir = path.join(__dirname, '/public');
 
 app.use(express.static('public'));
@@ -35,24 +35,28 @@ app.get('*', function(req, res)
 //      file, and then return the new note to the client.
 // 
 
-app.get('/api/notes', function(req, res) 
-    {
-        res.sendFile(path.join(__dirname, './db/db.json'));
-    }
-);
+app.get("/api/notes", function (req, res) {
+    fs.readFile("db/db.json", "utf8", function (err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      res.json(notes);
+    });
+  });
 
 app.get('/api/notes/:id', function(req, res) 
     {
-        let savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+        var savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
         res.json(savedNotes[Number(req.params.id)]);
     }
 );
 
 app.post('/api/notes', function(req, res) 
     {
-        let savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
-        let newNote = req.body;
-        let uniqueID = (savedNotes.length).toString();
+        var newNote = req.body;
+        var savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+        var uniqueID = (savedNotes.length).toString();
         newNote.id = uniqueID;
         savedNotes.push(newNote);
 
