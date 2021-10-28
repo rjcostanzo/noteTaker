@@ -8,7 +8,7 @@ This is a simple Express.js application that communicates with a .json file in o
 
 ### Usage
 
-To use this application you can view the live Heroku deployment or run `npm start` from the root directory (default: localhost:8080).
+To use this application you can view the ![live Heroku deployment](https://young-sands-97679.herokuapp.com) or run `npm start` from the root directory (default: localhost:8080).
 
 ![GIF Demo](./demo.gif)
 
