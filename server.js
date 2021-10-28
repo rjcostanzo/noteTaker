@@ -16,18 +16,6 @@ app.use(express.json());
 // -  `GET *` should return the `index.html` file.
 // 
 
-app.get('/notes', function(req, res) 
-    {
-        res.sendFile(path.join(mainDir, 'notes.html'));
-    }
-);
-
-app.get('*', function(req, res) 
-    {
-        res.sendFile(path.join(mainDir, 'index.html'));
-    }
-);
-
 // The following API routes should be created:
 // 
 // -  `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
@@ -35,13 +23,19 @@ app.get('*', function(req, res)
 //      file, and then return the new note to the client.
 // 
 
+app.get('/notes', function(req, res) 
+    {
+        res.sendFile(path.join(mainDir, 'notes.html'));
+    }
+);
+
 app.get("/api/notes", function (req, res) {
     fs.readFile("db/db.json", "utf8", function (err, data) {
       if (err) {
         console.log(err);
         return;
       }
-      res.json(notes);
+      res.json(JSON.parse(data));
     });
   });
 
@@ -63,6 +57,12 @@ app.post('/api/notes', function(req, res)
         fs.writeFileSync('./db/db.json', JSON.stringify(savedNotes));
         console.log('db.json updated with ', newNote);
         res.json(savedNotes);
+    }
+);
+
+app.get('*', function(req, res) 
+    {
+        res.sendFile(path.join(mainDir, 'index.html'));
     }
 );
 
